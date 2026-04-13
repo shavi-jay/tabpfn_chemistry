@@ -75,6 +75,8 @@ def run_active_learning_experiment(
     }
     results.append(result)
 
+    # Save results to CSV
+    pd.DataFrame(results).to_csv(save_path, index=False)
     
     # Active learning loop
     n_steps = (min(max_train_size, len(X_train)) - initial_train_size) // train_data_increment
@@ -118,7 +120,10 @@ def run_active_learning_experiment(
             "new_train_ids": new_seen_ids.tolist()
         }
         results.append(result)
-        
+            
+        # Save results to CSV
+        pd.DataFrame(results).to_csv(save_path, index=False)
+            
     # Full model fit and evaluation at the end
     final_test_rmse = test_rmse(X_train, y_train, train_ids, X_test, y_test)
     result = {

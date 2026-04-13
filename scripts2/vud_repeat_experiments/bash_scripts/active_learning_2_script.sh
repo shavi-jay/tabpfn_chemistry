@@ -25,7 +25,7 @@ for dataset in "${datasets[@]}"; do
                     --dataset_name "${dataset}_${endpoint}" \
                     --uncertainty_method "$uncertainty_method" \
                     --active_learning_seed "$seed" \
-                    --save_path "results/active_learning/total_and_random_test/${uncertainty_method}"
+                    --save_path "results/active_learning/active_learning_2/${uncertainty_method}"
             done
         done
     done

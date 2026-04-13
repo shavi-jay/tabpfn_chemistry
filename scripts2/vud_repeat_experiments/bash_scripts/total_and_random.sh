@@ -6,7 +6,7 @@ declare -a endpoints_admet=(0 1 2 3 4)
 declare -a endpoints_potency=(0 1)
 
 # Define uncertainty types
-declare -a uncertainty_types=("total" "random")
+declare -a uncertainty_methods=("total" "random")
 
 num_seeds=10
 
@@ -18,12 +18,12 @@ for dataset in "${datasets[@]}"; do
         endpoints=("${endpoints_potency[@]}")
     fi
     for endpoint in "${endpoints[@]}"; do
-        for uncertainty_type in "${uncertainty_types[@]}"; do
+        for uncertainty_method in "${uncertainty_methods[@]}"; do
             for seed in $(seq 0 $((num_seeds - 1))); do
-                echo "Running active learning for dataset: $dataset, endpoint: $endpoint, uncertainty type: $uncertainty_type, seed: $seed"
+                echo "Running active learning for dataset: $dataset, endpoint: $endpoint, uncertainty method: $uncertainty_method, seed: $seed"
                 python scripts2/vud_repeat_experiments/vud_active_learning.py \
                     --dataset_name "${dataset}_${endpoint}" \
-                    --uncertainty_type "$uncertainty_type" \
+                    --uncertainty_method "$uncertainty_method" \
                     --active_learning_seed "$seed" \
                     --save_path "results/active_learning/total_and_random_test/${uncertainty_type}"
             done

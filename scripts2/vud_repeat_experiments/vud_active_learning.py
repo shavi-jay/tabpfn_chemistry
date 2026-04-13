@@ -34,7 +34,7 @@ def run_active_learning_experiment(
 ):
     set_seed(active_learning_seed)
     
-    save_path = os.path.join(save_path, dataset_name, f"{active_learning_seed}.csv")
+    save_path = os.path.join(save_path, dataset_name, f"seed_{active_learning_seed}.csv")
     os.makedirs(os.path.dirname(save_path), exist_ok=True)
     
     # Load Dataset
@@ -77,8 +77,8 @@ def run_active_learning_experiment(
 
     
     # Active learning loop
-    for i, train_size in enumerate(range(initial_train_size, min(max_train_size, len(X_train)), train_data_increment)):
-        print(f"Training with {train_size} points")
+    n_steps = (min(max_train_size, len(X_train)) - initial_train_size) // train_data_increment
+    for i in tqdm(range(n_steps), desc="Active Learning Loop"):
         X_train_sub = X_train[seen_ids]
         y_train_sub = y_train[seen_ids]
         

@@ -37,6 +37,7 @@ def run_active_learning_experiment(
     set_seed(active_learning_seed)
     
     rng = np.random.default_rng(active_learning_seed)
+    rng_random_method = np.random.default_rng(active_learning_seed + 1)  # Separate RNG for random method to ensure different randomness
     
     save_path = os.path.join(save_path, dataset_name, f"seed_{active_learning_seed}.csv")
     os.makedirs(os.path.dirname(save_path), exist_ok=True)
@@ -108,7 +109,7 @@ def run_active_learning_experiment(
                 test_features=X_train[candidate_ids]
             )
         elif uncertainty_method == "random":
-            uncertainty_scores = rng.random(len(candidate_ids))
+            uncertainty_scores = rng_random_method.random(len(candidate_ids))
         else:
             raise ValueError(f"Unknown uncertainty method: {uncertainty_method}")
         
